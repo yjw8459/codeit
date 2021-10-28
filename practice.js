@@ -105,6 +105,7 @@ function fn_printMessage(text){
     console.log(message);
 }
 /**
+ * Default 값을 줄 수 있다.
  * undefined만 감지
  * @param {String} text 
  */
@@ -115,6 +116,144 @@ function fn_printMessage2(text = 'Nothing to display'){
 fn_printMessage(false);
 fn_printMessage2(false);
 
+/**
+ * Object Destructing 
+ * 객체의 값을 간소화하여 선언할 수 있다.
+ * @param {Object} person 
+ */
+function fn_displayPerson(person){
+    const { name, age } = person;
+    console.log(name);
+    console.log(age);
+}
+
+
+let person = { 'name' : 'jongwon', 'age' : 27 };
+fn_displayPerson(person);
+
+
+/**
+ * Object.assign, ... 같다 
+ * 속성을 합쳐서 대입할 수 있다. 
+ * 
+ * ...은 배열, 객체 모두 사용할 수 있어서 매우 중요하다.
+ * ...은 원소로 꺼내 사용한다는 의미로 이해하면 될듯.
+ */
+function fn_assignTest(){
+    const item = { type : 'String', size : '5' };
+    const detail = { price : 20, made : 'korea', gender : 'M' };
+    
+    const shirt0 = Object.assign(item, detail);
+    console.log(shirt0);
+    
+    const shirt = {...item, ...detail}; 
+    console.log(shirt);
+    //{type: 'String', size: '5', price: 20, made: 'korea', gender: 'M'}
+    
+    console.log(item);
+}
+
+/**
+ * 배열 spread 팁
+ */
+function fn_arraySpreadTest(){
+    let fruits = [ 'berry', 'grape', 'apple' ];
+    fruits = [...fruits, 'pear'];   //push
+    console.log(fruits);
+    
+    fruits = ['banana', ...fruits]; //unshift
+    console.log(fruits);
+    
+    
+    const fruits2 = ['melon', 'peach', 'pineapple'];
+    let combined = fruits.concat(fruits2);
+    combined = [...fruits, 'cherry', ...fruits2];
+    
+    console.log(combined);
+}
 
 
 
+/**
+ * 배열 중복 제거 
+ */
+
+function fn_isExist(array){
+//  const array = [ 'dog', 'mouse', 'cat', 'dog', 'dog', 'cat' ];
+    console.log([...new Set(array)]);
+}
+
+/**
+ * Optional Chaning
+ * 연산자 ?.는 프로퍼티가 없는 중첩 객체를 에러 없이 안전하게 접근할 수 있다.
+ * ?.은 ?. 앞의 평가 대상이 undefined 나 null이면 평가를 멈추고 undefined를 반환
+ * 단락 평가(short-circuit)라고 부른다.
+ * 즉 ?.의 평가가 멈췄을 경우 오른쪽 피 연산은 수행하지 않음.
+ * 
+ * ?.은 연산자가 아니다. ?.은 함수나 대괄호와 함께 동작하는 특별한 문법 구조체이다.
+ */
+function fn_optionalChaningTest(){
+
+
+function fn_optionalChaningTest1(){
+    let user1 = {
+        admin(){
+            console.log('관리자 계정입니다.');
+        }
+    }
+    let user2 = {};
+    let user3 ;
+    user1.admin?.();
+    user2.admin?.();
+    user3?.admin?.();
+}
+
+function fn_optionalChaningTest2(){
+    let user1 = {
+        firstName : 'Violet'
+    };
+
+    let user2 = null;
+
+    let key = 'firstName';
+    console.log(user1?.[key]);
+    console.log(user2?.[key]);
+    console.log(user1?.[key]?.something?.not?.existing);
+}
+
+/**
+ * title의 값이 있으면 title 없으면 empty
+ */
+function fn_optionalChaningTest3(){
+    let person = { job : { title : 'testTitle' } };
+    const title = person.job?.title ?? 'empty';
+    console.log(title);
+}
+
+fn_optionalChaningTest1();
+fn_optionalChaningTest2();
+fn_optionalChaningTest3();
+}
+
+function fn_templateLiteralsTest(){
+    const person = {
+        name : 'jongwon',
+        score : 4
+    };
+    const { name, score } = person;
+    console.log(`이름 : ${name}, 점수 : ${score}`);
+}
+//fn_templateLiteralsTest();
+
+function fn_cleanLooping(){
+    // Looping
+    const items = [1, 2, 3, 4, 5, 6];
+    const result = items.filter((num) => num % 2 === 0).map( (num) => num * 4 ).reduce( (a, b) => a + b, 0 );
+    console.log(result);
+    console.log(items.filter((num) => num % 2 === 0));  //짝수
+    console.log(items.filter((num) => num % 2 === 0).map( (num) => num * 4 ));  //num *= num * 4
+    console.log(items.filter((num) => num % 2 === 0).map( (num) => num * 4 ).reduce( (a, b) => a + b, 0 ));  
+    console.log(items.filter((num) => num % 2 === 0).map( (num) => num * 4 ).reduce( (a, b) => a + b));  //뒤에 0은 시작 값
+}
+
+fn_cleanLooping();
