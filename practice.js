@@ -1,21 +1,3 @@
-
-
-var a = 1;
-
-function outer(){
-    console.log(a);     //첫번 째 로그 출력
-    function inner(){
-        console.log(a); //두번 째 로그 출력
-        var a = 3;
-    }
-    inner();
-
-    console.log(a);     // 세번 째 로그 출력
-}
-
-outer();
-console.log(a);         //네번 째 로그 출력 후 전역 콘텍스트 종료
-
 /**
  * JavaScript
 
@@ -89,14 +71,50 @@ console.log(a);
 outerEnviromentReference(외부 참조)
 외부 실행 컨텍스트(Lexical Enviroment)를 참조한다.
 스코프 체인(외부 변수및 함수 참조).
-
-
-
-
-
-
-
-
-
-
  */
+
+
+
+function fn_hoistingTest(){
+    var a = 1;
+
+function outer(){
+    console.log(a);     //첫번 째 로그 출력
+    function inner(){
+        console.log(a); //두번 째 로그 출력
+        var a = 3;
+    }
+    inner();
+
+    console.log(a);     // 세번 째 로그 출력
+}
+
+outer();
+console.log(a);         //네번 째 로그 출력 후 전역 콘텍스트 종료
+}
+
+
+/**
+ * Nullish Coalescing Operator (널 병합 연산자)
+ * Null 또는 undefined가 아닐 경우 Nothing to display 출력
+ * 0또는 ''는 감지하지 못한다.
+ * @param {String} text 
+ */
+function fn_printMessage(text){
+    const message = text ?? 'Nothing to display';
+    console.log(message);
+}
+/**
+ * undefined만 감지
+ * @param {String} text 
+ */
+function fn_printMessage2(text = 'Nothing to display'){
+    console.log(text);
+}
+
+fn_printMessage(false);
+fn_printMessage2(false);
+
+
+
+
